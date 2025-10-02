@@ -1,13 +1,20 @@
 using UnityEngine;
 
+public enum BunnyGender { Male, Female }
+
 public class Bunny : MonoBehaviour
 {
     [Header("Bunny Settings")]
-    public float energy = 10;
+    public float energy = 100;
     public float age = 0;
     public float maxAge = 20;
     public float speed = 1f;
     public float visionRange = 5f;
+
+    [Header("Bunny Reproduction")]
+    public BunnyGender gender;          // Nuevo: género
+    public float reproductionCooldown = 5f; // Nuevo: tiempo mínimo entre partos
+    public float lastReproductionTime = -999f;
 
     [Header("Bunny States")]
     public bool isAlive = true;
@@ -16,9 +23,14 @@ public class Bunny : MonoBehaviour
     private Vector3 destination;
     private float h;
 
+
+
     private void Start()
     {
         destination = transform.position;
+        // asigna género aleatorio si no está definido en el prefab
+        if (Random.value > 0.5f) gender = BunnyGender.Male;
+        else gender = BunnyGender.Female;
     }
 
     public void Simulate(float h)
@@ -48,6 +60,16 @@ public class Bunny : MonoBehaviour
         Move();
         Age();
         CheckState();
+
+        // Intentar reproducirse si está explorando
+        if (currentState == BunnyState.Exploring)
+        {
+            BunnyReproduction repro = GetComponent<BunnyReproduction>();
+            if (repro != null)
+            {
+                repro.TryReproduce();
+            }
+        }
     }
 
     void EvaluateState()
@@ -275,3 +297,4 @@ public class Bunny : MonoBehaviour
         return nearest;
     }
 }
+

@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3868413411585423318}
   - component: {fileID: 7423225132313568019}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: FoodSpawner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
