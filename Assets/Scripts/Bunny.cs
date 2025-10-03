@@ -23,7 +23,7 @@ public class Bunny : MonoBehaviour
     private Vector3 destination;
     private float h;
 
-
+    public bool autoSimulate { get; internal set; }
 
     private void Start()
     {
@@ -188,7 +188,7 @@ public class Bunny : MonoBehaviour
         }
     }
 
-    void SelectNewDestination()
+    public void SelectNewDestination()
     {
         Vector3 direction = new Vector3(
             Random.Range(-visionRange, visionRange),
